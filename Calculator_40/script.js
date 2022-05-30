@@ -85,3 +85,4 @@ function clear(id) {
 }
 
 let asd = [];
+let asdasd = {};
