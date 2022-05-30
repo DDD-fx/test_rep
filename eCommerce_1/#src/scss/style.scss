@@ -1,29 +1,101 @@
+@use "sass:math";
+//@import "base/mixins";
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700&display=swap');
+@import "fonts/fonts";
+@import "fonts/icons";
+@import "normalize";
+
+$fz: 16;
+
+@function rem($size) {
+  $remSize: $size / $fz;
+  @return $remSize * 1rem;
+}
+@function em($size) {
+  $emSize: $size / $containerWidth;
+  @return $emSize * 1em;
+}
+
+$fontFamily: Montserrat;
+$fontSize: rem(18);
+$mainColor: #000;
+$minWidth: 320;
+$maxWidth: 1920;
+$maxWidthContainer: 1590;   //огранич. контейнер
+$containerPadding: 30;      //по 15 слева и справа
+$responsiveType: 1;          //контейнер без брейкпоинтов
+$containerWidth: $maxWidthContainer + $containerPadding;
+//breakpoints
+$pc: em($containerWidth);
+$tablet: em(991.98);
+$mobile: em(767.98);
+$mobileSmall: em(479.98);
 
 body{
-  font-size: 50px;
-  color: blueviolet;
+  font-size: 14px;
+  font-weight: 500;
+  .lock &{                //скролл заблочен
+    overflow: hidden;
+    touch-action: none;
+  }
+}
+.wrapper{
+  min-height: 100%;
   display: flex;
-}
+  flex-direction: column;
+  overflow: hidden;
+  //сайт загружен
+  .loaded & {
 
-span{
-  font-size: 20px;
-  @media (max-width: 767px) {
-    font-size: 15px;
   }
-}
-div{
-  font-size: 30px;
-  position: absolute;
-  top: 0;
-  right: 0;
-  min-height: 500px;
-  min-width: 500px;
-  @media (max-width: 767px) {
-    font-size: 20px;
+  //прижать футер
+  > main {
+    flex: 1 1 auto;
+  }
+  //фикс для слайдеров
+  > * {
+    min-width: 0;
   }
 }
 
-.main__img{
-  position: absolute;
-  max-width: 500px;
+
+
+
+@if($responsiveType==1) {
+  //отзывчивая
+  [class *= "__container"]{
+    @if($maxWidthContainer>0){
+      max-width: rem($maxWidthContainer);
+      box-sizing: content-box;
+      margin: 0 auto;
+    }
+    @if($containerPadding>0){
+     padding: 0 rem(math.div($containerPadding, 2));
+    }
+  }
+} @else{
+  //по брейкпоинтам
+  [class *= "__container"]{
+    margin: 0 auto;
+    @if($maxWidthContainer>0){
+      max-width: rem($maxWidthContainer);
+      box-sizing: content-box;
+    } @else {
+      @if($containerPadding>0) {
+        padding: 0 rem(math.div($containerPadding, 2));
+      }
+    }
+    @media (max-width: $pc) {
+      max-width: rem(970);
+    }
+    @media (max-width: $tablet) {
+      max-width: rem(750);
+    }
+    @media (max-width: $mobile) {
+      max-width: none;
+      @if($containerPadding>0 and $maxWidthContainer>0){
+        padding: 0 rem(math.div($containerPadding, 2));
+      }
+    }
+  }
 }

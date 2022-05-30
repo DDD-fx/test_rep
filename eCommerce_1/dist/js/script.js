@@ -1,4 +1,4 @@
-alert("dsfsdf")
+
 
 
     function testWebP(callback) {               //проверка браузера на поддержку webP
