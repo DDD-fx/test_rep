@@ -83,3 +83,5 @@ function clear(id) {
         memoryPendOp = ""
     }
 }
+const abc = [];
+const asd = [];
